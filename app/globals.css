@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --background: #020c18;
+  --foreground: #f8fafc;
+  --surface: #06101d;
+  --surface-elevated: #081628;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+
+  --accent-start: #9d7cff;
+  --accent-middle: #c9a8ff;
+  --accent-end: #f6e6ff;
+
+  --accent-text: #7652d6;
+  --cta-text: #1b1722;
+
+  --accent-shadow: rgba(153, 124, 255, 0.22);
+  --accent-shadow-hover: rgba(153, 124, 255, 0.45);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+  
+  --color-bg-dark: #020c18;
+  --color-bg-card: #06101d;
+  --color-bg-nav: #081628;
+  
+  --color-accent-purple: #9d7cff;
+  --color-accent-purple-glow: rgba(157, 124, 255, 0.2);
+  --color-text-muted: #94a3b8;
+
+  --animate-marquee: marquee 35s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 35s linear infinite;
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+
