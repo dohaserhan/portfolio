@@ -8,7 +8,7 @@ export default function About() {
       id="about"
       className="relative overflow-hidden bg-[radial-gradient(circle_at_80%_50%,var(--color-accent-purple-glow)_0%,rgba(157,124,255,0.06)_25%,transparent_60%),linear-gradient(180deg,var(--color-bg-card)_0%,var(--color-bg-dark)_100%)] pt-20 pb-12 sm:pt-24 sm:pb-16 text-white"
     >
-      {/* Background glow */}
+      {/* Background glow  testttttttttt*/}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-1/2 right-10 h-[280px] w-[280px] -translate-y-1/2 rounded-full bg-accent-purple/20 blur-[100px] sm:h-[420px] sm:w-[420px] sm:blur-[130px]" />
       </div>
