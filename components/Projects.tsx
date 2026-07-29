@@ -67,11 +67,11 @@ export default function Projects() {
               Projects
             </p>
 
-            <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl bg-gradient-to-b from-white to-white/80 bg-clip-text text-transparent">
+            <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl text-[#211e24]">
               Featured Work
             </h2>
 
-            <p className="mt-4 leading-relaxed text-white/60 text-sm sm:text-base">
+            <p className="mt-4 leading-relaxed text-text-secondary/90 text-sm sm:text-base">
               A selection of projects where I contributed to backend systems,
               APIs, database design, authentication, and real-world business
               workflows.
@@ -80,7 +80,7 @@ export default function Projects() {
 
           {/* Navigation for mobile / arrow controls fallback */}
           <div className="mt-6 flex items-center justify-between gap-4 md:hidden">
-            <p className="text-xs font-semibold uppercase tracking-wider text-white/40 font-mono">
+            <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary/40 font-mono">
               {String(currentIndex + 1).padStart(2, "0")} /{" "}
               {String(projects.length).padStart(2, "0")}
             </p>
@@ -88,7 +88,7 @@ export default function Projects() {
               <button
                 type="button"
                 onClick={handlePrevious}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/5 bg-white/[0.02] text-white/60 transition hover:border-accent-purple/40 hover:bg-accent-purple/10 hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border-color bg-[#fafaf8] text-text-secondary transition-all hover:border-accent-purple/40 hover:bg-accent-purple/5 hover:text-accent-purple"
                 aria-label="Previous Project"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@ export default function Projects() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/5 bg-white/[0.02] text-white/60 transition hover:border-accent-purple/40 hover:bg-accent-purple/10 hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border-color bg-[#fafaf8] text-text-secondary transition-all hover:border-accent-purple/40 hover:bg-accent-purple/5 hover:text-accent-purple"
                 aria-label="Next Project"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ export default function Projects() {
 
         {/* Premium Segmented Navigation Tabs for Desktop */}
         <div className="mt-10 hidden md:block">
-          <div className="inline-flex rounded-full border border-white/5 bg-white/[0.02] p-1.5 backdrop-blur-md">
+          <div className="inline-flex rounded-full border border-border-color bg-[#EAE4DC]/30 p-1.5 backdrop-blur-md shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]">
             {projects.map((project, idx) => {
               const isActive = currentIndex === idx;
               return (
@@ -120,18 +120,19 @@ export default function Projects() {
                   key={project.id}
                   type="button"
                   onClick={() => handleTabClick(idx)}
-                  className="relative rounded-full px-6 py-2.5 text-xs font-semibold tracking-wide transition-colors duration-200"
-                  style={{
-                    color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.5)",
-                  }}
+                  className={`relative rounded-full px-6 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
+                    isActive 
+                      ? "text-accent-purple shadow-[0_1px_3px_rgba(98,86,125,0.05)]" 
+                      : "text-text-secondary hover:text-text-primary"
+                  }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="active-project-tab"
-                      className="absolute inset-0 rounded-full border border-white/10 bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_16px_rgba(0,0,0,0.2)]"
+                      className="absolute inset-0 rounded-full border border-border-color/30 bg-white shadow-[0_3px_10px_rgba(98,86,125,0.08),0_1px_3px_rgba(0,0,0,0.04)]"
                       transition={{
                         type: "spring",
-                        stiffness: 380,
+                        stiffness: 400,
                         damping: 30,
                       }}
                     />
@@ -157,6 +158,18 @@ export default function Projects() {
                 x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.2 },
               }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.6}
+              onDragEnd={(event, info) => {
+                const threshold = 70;
+                if (info.offset.x < -threshold) {
+                  handleNext();
+                } else if (info.offset.x > threshold) {
+                  handlePrevious();
+                }
+              }}
+              className="cursor-grab active:cursor-grabbing touch-pan-y"
             >
               <ProjectCard project={projects[currentIndex]} />
             </motion.div>

@@ -47,7 +47,7 @@ export default function ParticleBackground() {
         radius: Math.random() * 1.4 + 0.4,
         speedX: (Math.random() - 0.5) * 0.18,
         speedY: (Math.random() - 0.5) * 0.18,
-        opacity: Math.random() * 0.55 + 0.2,
+        opacity: Math.random() * 0.22 + 0.06,
       }));
     };
 
@@ -75,7 +75,7 @@ export default function ParticleBackground() {
           Math.PI * 2,
         );
 
-        context.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+        context.fillStyle = `rgba(30, 27, 24, ${particle.opacity})`;
         context.fill();
       });
 

@@ -10,15 +10,15 @@ export default function Footer() {
 
   return (
     <footer className="mx-auto max-w-[1540px] px-6 lg:px-12">
-      <div className="border-t border-white/10 py-8 md:py-10">
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between text-xs sm:text-sm text-white/50 select-none">
+      <div className="border-t border-border-color py-8 md:py-10">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between text-xs sm:text-sm text-text-secondary select-none">
           
           {/* Left: Copyright and Stack info */}
           <div className="flex flex-col gap-1 text-center md:text-left">
-            <span className="font-semibold text-white/80">
+            <span className="font-semibold text-text-primary">
               © {currentYear} {profile.name}
             </span>
-            <span className="text-white/35 text-[11px] sm:text-xs">
+            <span className="text-text-secondary/70 text-[11px] sm:text-xs">
               Built with Next.js and Tailwind CSS
             </span>
           </div>
@@ -32,7 +32,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="transition-colors hover:text-accent-purple"
+                  className="transition-colors hover:text-text-primary"
                 >
                   {link.label}
                 </Link>
@@ -40,14 +40,14 @@ export default function Footer() {
             </nav>
 
             {/* Socials & Top Action */}
-            <div className="flex items-center gap-4 border-t border-white/5 pt-4 w-full justify-center md:border-t-0 md:pt-0 md:w-auto">
+            <div className="flex items-center gap-4 border-t border-border-color/50 pt-4 w-full justify-center md:border-t-0 md:pt-0 md:w-auto">
               
               {/* LinkedIn */}
               <a
                 href={profile.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-colors hover:text-accent-purple"
+                className="transition-colors hover:text-text-primary"
                 title="LinkedIn Profile"
                 aria-label="LinkedIn Profile"
               >
@@ -63,7 +63,7 @@ export default function Footer() {
                 href={profile.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-colors hover:text-accent-purple"
+                className="transition-colors hover:text-text-primary"
                 title="GitHub Repositories"
                 aria-label="GitHub Repositories"
               >

@@ -1,20 +1,24 @@
-import { CodeXml, Database, GitBranch, Rocket } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-export type AboutCardItem = {
-    title: string;
-    description: string;
-    icon: LucideIcon;
-    skills: string[];
-    buttonText: string;
-    href: string;
-}; 
+export const aboutHeader = {
+  badge: "About",
+  title: "Building Reliable Full-Stack Solutions\nfor Real Products",
+  description: "I'm a junior full stack developer with a strong focus on backend systems, passionate about designing secure, scalable, and maintainable web applications. With experience across healthcare, education, and microservices platforms, I enjoy bringing user interfaces to life with React while structuring robust backends with Laravel and Django.",
+};
+
+export interface AboutCardItem {
+  title: string;
+  description: string;
+  icon: string; // Separated from TSX
+  skills: string[];
+  buttonText: string;
+  href: string;
+}
 
 export const aboutCards: AboutCardItem[] = [
-     {
-    title: "Backend Development",
+  {
+    title: "Scalable Backend Systems",
     description:
       "Building secure and maintainable backend applications using Laravel and Django.",
-    icon: CodeXml,
+    icon: "backend",
     skills: [
       "Laravel & Django",
       "RESTful APIs",
@@ -25,10 +29,10 @@ export const aboutCards: AboutCardItem[] = [
     href: "#projects",
   },
   {
-    title: "Database Engineering",
+    title: "Robust Database Design",
     description:
       "Designing reliable relational databases that support structured and scalable applications.",
-    icon: Database,
+    icon: "database",
     skills: [
       "PostgreSQL & MySQL",
       "Schema Design",
@@ -39,10 +43,10 @@ export const aboutCards: AboutCardItem[] = [
     href: "#projects",
   },
   {
-    title: "Development Workflow",
+    title: "Efficient Development Workflow",
     description:
       "Using modern tools and collaborative practices to maintain an organized development process.",
-    icon: GitBranch,
+    icon: "git",
     skills: [
       "Git Version Control",
       "Docker Exposure",
@@ -53,10 +57,10 @@ export const aboutCards: AboutCardItem[] = [
     href: "#projects",
   },
   {
-    title: "Continuous Learning",
+    title: "Continuous Technical Growth",
     description:
       "Continuously improving my technical knowledge through real-world development and independent learning.",
-    icon: Rocket,
+    icon: "rocket",
     skills: [
       "Learning Every Day",
       "Exploring New Technologies",

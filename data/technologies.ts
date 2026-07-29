@@ -18,7 +18,7 @@ export const row1Technologies: Technology[] = [
 
 export const row2Technologies: Technology[] = [
   { name: "MySQL", icon: "/tech/mysql.svg", offsetY: -3, delay: 2.1, duration: 5.8, gap: "gap-3", px: "px-5" },
-  { name: "SQLite", icon: "/tech/sqlite.svg", offsetY: 4, delay: 1.2, duration: 6.6, gap: "gap-3", px: "px-[22px]" },
+  { name: "Next.js", icon: "/tech/nextjs.svg", offsetY: 4, delay: 1.2, duration: 6.6, gap: "gap-3.5", px: "px-6" },
   { name: "React", icon: "/tech/react.svg", offsetY: -5, delay: 0.6, duration: 6.0, gap: "gap-3.5", px: "px-6" },
   { name: "Laravel", icon: "/tech/laravel.svg", offsetY: 3, delay: 0, duration: 6.2, gap: "gap-3.5", px: "px-6" },
   { name: "PostgreSQL", icon: "/tech/postgresql.svg", offsetY: -4, delay: 0.3, duration: 7.2, gap: "gap-3.5", px: "px-6" },

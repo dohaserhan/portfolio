@@ -1,37 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020c18;
-  --foreground: #f8fafc;
-  --surface: #06101d;
-  --surface-elevated: #081628;
+  --background: #FAF9F6;
+  --foreground: #1E1B18;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  --text-primary: #1E1B18;
+  --text-secondary: #665F5C;
 
-  --accent-start: #9d7cff;
-  --accent-middle: #c9a8ff;
-  --accent-end: #f6e6ff;
+  --accent-start: #62567D;
+  --accent-middle: #54486E;
+  --accent-end: #473C5F;
 
-  --accent-text: #7652d6;
-  --cta-text: #1b1722;
+  --accent-text: #54486E;
+  --cta-text: #ffffff;
 
-  --accent-shadow: rgba(153, 124, 255, 0.22);
-  --accent-shadow-hover: rgba(153, 124, 255, 0.45);
+  --border-color: #EAE4DC;
+  --gold-accent: #F5ECE5;
+
+  --accent-shadow: rgba(84, 72, 110, 0.1);
+  --accent-shadow-hover: rgba(84, 72, 110, 0.2);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
-  
-  --color-bg-dark: #020c18;
-  --color-bg-card: #06101d;
-  --color-bg-nav: #081628;
-  
-  --color-accent-purple: #9d7cff;
-  --color-accent-purple-glow: rgba(157, 124, 255, 0.2);
-  --color-text-muted: #94a3b8;
+
+  --color-bg-dark: #FAF9F6;
+  --color-bg-card: #ffffff;
+  --color-bg-nav: rgba(255, 255, 255, 0.75);
+
+  --color-accent-purple: #62567D;
+  --color-accent-purple-glow: rgba(98, 86, 125, 0.05);
+  --color-accent-light: #F5ECE5;
+  --color-text-muted: #665F5C;
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+
+  --color-gold-accent: var(--gold-accent);
+  --color-border-color: var(--border-color);
 
   --animate-marquee: marquee 35s linear infinite;
   --animate-marquee-reverse: marquee-reverse 35s linear infinite;
@@ -40,6 +49,7 @@
     0% {
       transform: translateX(0%);
     }
+
     100% {
       transform: translateX(-50%);
     }
@@ -49,6 +59,7 @@
     0% {
       transform: translateX(-50%);
     }
+
     100% {
       transform: translateX(0%);
     }
@@ -58,9 +69,138 @@
 html {
   scroll-behavior: smooth;
 }
+
 body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
 }
 
+/* Premium Hero Ambient Background with Warm Ivory, Soft Blush/Lavender Glows and Subtle SVG Grain */
+#hero {
+  background-image:
+    radial-gradient(circle at 80% 50%, rgba(197, 179, 211, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 20% 30%, rgba(245, 236, 229, 0.35) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(250, 249, 246, 0.4) 0%, rgba(240, 236, 230, 0.15) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.012'/%3E%3C/svg%3E"),
+    linear-gradient(to bottom, #FAF9F6, #F5F1E9) !important;
+}
+
+/* Force text-white utility classes to render as dark text inside light-themed sections */
+#about .text-white,
+#projects .text-white,
+#contact .text-white {
+  color: var(--text-primary) !important;
+}
+
+#about .text-white\/60,
+#projects .text-white\/60,
+#contact .text-white\/60 {
+  color: rgba(30, 27, 24, 0.6) !important;
+}
+
+#about .text-white\/70,
+#projects .text-white\/70,
+#contact .text-white\/70 {
+  color: rgba(30, 27, 24, 0.7) !important;
+}
+
+#about .text-white\/80,
+#projects .text-white\/80,
+#contact .text-white\/80 {
+  color: rgba(30, 27, 24, 0.8) !important;
+}
+
+#about .text-white\/90,
+#projects .text-white\/90,
+#contact .text-white\/90 {
+  color: rgba(30, 27, 24, 0.9) !important;
+}
+
+#about .text-white\/95,
+#projects .text-white\/95,
+#contact .text-white\/95 {
+  color: rgba(30, 27, 24, 0.95) !important;
+}
+
+#about .border-white\/10,
+#projects .border-white\/10,
+#contact .border-white\/10,
+#about .border-white\/5,
+#projects .border-white\/5,
+#contact .border-white\/5 {
+  border-color: var(--border-color) !important;
+}
+
+#about .bg-white\/10,
+#projects .bg-white\/10,
+#contact .bg-white\/10 {
+  background-color: rgba(30, 27, 24, 0.04) !important;
+}
+
+#about .bg-white\/5,
+#projects .bg-white\/5,
+#contact .bg-white\/5 {
+  background-color: rgba(30, 27, 24, 0.02) !important;
+}
+
+#about .bg-white\/\[0\.02\],
+#projects .bg-white\/\[0\.02\],
+#contact .bg-white\/\[0\.02\] {
+  background-color: rgba(30, 27, 24, 0.01) !important;
+}
+
+/* Custom CSS filter to recolor black SVG icons to brand purple (#62567D) */
+.tech-logo-purple {
+  filter: invert(33%) sepia(18%) saturate(1022%) hue-rotate(218deg) brightness(93%) contrast(91%);
+}
+
+/* Keep editor mock text styling light despite global dark-on-light theme overrides */
+#projects .code-editor .text-white {
+  color: #ffffff !important;
+}
+
+#projects .code-editor .text-white\/20 {
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
+#projects .code-editor .text-white\/35 {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+#projects .code-editor .text-white\/50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+#projects .code-editor .text-white\/90 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Purple Text Shimmer Animation */
+@keyframes purpleTextShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-text-purple-shimmer {
+  background: linear-gradient(120deg,
+      #1E1B18 0%,
+      #62567D 30%,
+      #9c89c4 50%,
+      #62567D 70%,
+      #1E1B18 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: purpleTextShimmer 6s ease-in-out infinite;
+}

@@ -378,25 +378,50 @@ function highlightCode(code: string, lang: string) {
   ));
 }
 
+function parseBoldText(text: string) {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={index} className="font-semibold text-text-primary">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
+function splitContribution(contribution: string) {
+  const match = contribution.match(/^([^a-zA-Z0-9\s*#_]{1,2})\s*(.*)$/u);
+  if (match) {
+    return { emoji: match[1], text: match[2] };
+  }
+  return { emoji: "⚡", text: contribution };
+}
+
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="group grid overflow-hidden rounded-3xl border border-white/[0.06] bg-gradient-to-b from-[#06101d]/60 to-[#040b14]/40 backdrop-blur-md lg:grid-cols-[1.1fr_1.3fr] shadow-[0_24px_60px_rgba(0,0,0,0.35)] hover:border-white/[0.12] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+    <article className="group grid overflow-hidden rounded-3xl border border-border-color bg-gradient-to-b from-white to-bg-dark/40 backdrop-blur-sm lg:grid-cols-[42%_58%] shadow-[0_8px_30px_rgba(92,85,87,0.02),0_1px_3px_rgba(92,85,87,0.01)] hover:border-accent-purple/20 hover:shadow-[0_24px_50px_rgba(30,27,24,0.06)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
       {/* Visual / Editor Side */}
-      <div className="relative min-h-[380px] bg-white/[0.01] flex items-center justify-center p-6 sm:p-8 lg:p-10 lg:min-h-0 overflow-hidden border-b border-white/[0.06] lg:border-b-0 lg:border-r lg:border-white/[0.06]">
+      <div className="relative min-h-[380px] bg-white/[0.01] flex items-center justify-center p-6 sm:p-8 lg:p-10 lg:min-h-0 overflow-hidden border-b border-border-color lg:border-b-0 lg:border-r lg:border-border-color">
         {/* Soft backdrop radial purple glow */}
-        <div className="absolute inset-0 bg-radial from-accent-purple/15 via-transparent to-transparent pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+        <div className="absolute inset-0 bg-radial from-accent-purple/8 via-transparent to-transparent pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
         {/* Developer Grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-60" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(98,86,125,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(98,86,125,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-60" />
 
         {/* Code window mock */}
-        <div className="relative w-full max-w-md rounded-xl border border-white/[0.08] bg-[#030d1a] shadow-[0_4px_12px_rgba(0,0,0,0.5),0_24px_64px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02] group-hover:border-white/[0.16] group-hover:shadow-accent-purple/5">
+        <div className="code-editor relative w-full max-w-md rounded-2xl border border-white/[0.08] bg-[#030d1a] shadow-[0_20px_50px_rgba(3,13,26,0.55),0_4px_20px_rgba(3,13,26,0.3),0_0_40px_rgba(98,86,125,0.06),inset_0_1px_0_rgba(255,255,255,0.12)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02] group-hover:border-white/[0.16] group-hover:shadow-[0_30px_70px_rgba(3,13,26,0.65),0_8px_30px_rgba(3,13,26,0.4),0_0_50px_rgba(98,86,125,0.12)]">
+          {/* Subtle reflection overlay */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.01] to-white/[0.04] z-10" />
+
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-white/[0.01] select-none">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-white/[0.01] select-none relative z-20">
             <div className="flex items-center gap-1.5">
-              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+              <div className="h-2 w-2 rounded-full bg-[#ff5f56]" />
+              <div className="h-2 w-2 rounded-full bg-[#ffbd2e]" />
+              <div className="h-2 w-2 rounded-full bg-[#27c93f]" />
             </div>
             <div className="text-[10px] font-mono font-medium text-white/35 flex items-center gap-1.5">
               <svg
@@ -419,7 +444,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
           {/* Editor Body */}
-          <div className="p-4 font-mono text-[10px] sm:text-xs leading-relaxed overflow-x-auto whitespace-pre max-h-[280px]">
+          <div className="p-4 font-mono text-[10px] sm:text-xs leading-relaxed overflow-x-auto whitespace-pre max-h-[280px] relative z-20">
             <div className="flex items-start">
               {/* Line numbers column */}
               <div className="mr-3 select-none text-right text-white/20 pr-3 border-r border-white/5 font-mono flex flex-col">
@@ -450,45 +475,69 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </p>
 
           {/* Title */}
-          <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">
+          <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-text-primary sm:text-3xl lg:text-4xl">
             {project.title}
           </h3>
 
+          {/* Metadata Row */}
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-text-secondary/80">
+            <span className="flex items-center gap-1.5">
+              <span className="font-bold uppercase tracking-wider text-text-secondary/40 text-[9px]">Role</span>
+              <span className="text-text-secondary/30 select-none">•</span>
+              <span className="font-semibold text-text-primary">{project.role}</span>
+            </span>
+            <span className="text-text-secondary/30 select-none">│</span>
+            <span className="flex items-center gap-1.5">
+              <span className="font-bold uppercase tracking-wider text-text-secondary/40 text-[9px]">Duration</span>
+              <span className="text-text-secondary/30 select-none">•</span>
+              <span className="font-semibold text-text-primary">{project.duration}</span>
+            </span>
+            <span className="text-text-secondary/30 select-none">│</span>
+            <span className="flex items-center gap-1.5">
+              <span className="font-bold uppercase tracking-wider text-text-secondary/40 text-[9px]">Domain</span>
+              <span className="text-text-secondary/30 select-none">•</span>
+              <span className="font-semibold text-text-primary">{project.domain}</span>
+            </span>
+          </div>
+
           {/* Description */}
-          <p className="mt-3 text-sm leading-relaxed text-white/80">
+          <p className="mt-3.5 text-sm leading-relaxed text-text-secondary/90">
             {project.description}
           </p>
 
           {/* Key Contributions */}
           <div className="mt-5">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary/50">
               Key Contributions
             </h4>
 
             <ul className="mt-2.5 space-y-1.5">
-              {project.contributions.map((contribution) => (
-                <li
-                  key={contribution}
-                  className="flex items-start gap-2.5 text-sm leading-relaxed text-white/70"
-                >
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-purple/80" />
-                  {contribution}
-                </li>
-              ))}
+              {project.contributions.map((contribution) => {
+                const { emoji, text } = splitContribution(contribution);
+                return (
+                  <li
+                    key={contribution}
+                    className="flex items-start gap-2.5 text-sm leading-relaxed text-text-secondary/90"
+                  >
+                    <span className="flex-shrink-0 text-base leading-none select-none mt-0.5">{emoji}</span>
+                    <span>{parseBoldText(text)}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* Technologies */}
           <div className="mt-5">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary/50">
               Technologies
             </h4>
 
-            <div className="mt-2 flex flex-wrap gap-1.5">
+            <div className="mt-2 flex flex-wrap gap-1">
               {project.technologies.map((technology) => (
                 <span
                   key={technology}
-                  className="rounded-full border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-xs text-white/70 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-accent-purple/50 hover:bg-accent-purple/10 hover:text-white"
+                  className="rounded-full border border-border-color bg-[#fafaf8] px-3 py-1 text-xs text-text-secondary transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-accent-purple/40 hover:bg-accent-purple/5 hover:text-text-primary"
                 >
                   {technology}
                 </span>
@@ -503,7 +552,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             Engineering Challenge
           </h5>
 
-          <p className="mt-1.5 text-sm leading-relaxed text-white/75">
+          <p className="mt-1.5 text-sm leading-relaxed text-text-secondary/90">
             {project.challenge}
           </p>
         </div>

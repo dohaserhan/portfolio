@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "motion/react";
 import CTAButton from "./CTAButton";
 import { navigationLinks } from "@/data/navigation";
@@ -52,32 +53,44 @@ export default function Navbar() {
   return (
     <header
       className="fixed inset-x-0 top-0 z-50 
-    border-b border-white/10 
-    bg-bg-card/65
-     backdrop-blur-xl
-     backdrop-saturate-150
-      shadow-[0_10px_40px_rgba(0,0,0,0.25)]"
+    border-b border-border-color/60 
+    bg-bg-nav
+     backdrop-blur-2xl
+     backdrop-saturate-[1.8]
+      shadow-[0_2px_15px_rgba(0,0,0,0.02),0_1px_3px_rgba(0,0,0,0.01)]"
     >
       <div className="mx-auto max-w-[1540px] px-6 py-5 lg:px-12">
         <div className="flex items-center justify-between h-9">
           <Link
             href="#hero"
             onClick={() => handleLinkClick("#hero")}
-            className="flex flex-col lg:ml-8"
+            className="flex items-center gap-3.5 lg:ml-8 group"
           >
-            <span className="text-lg font-bold tracking-[0.25em] text-white sm:text-2xl sm:tracking-[0.35em]">
-              {profile.name.toUpperCase()}
-            </span>
+            {/* Logo container */}
+            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-border-color bg-white/90 p-1 shadow-[0_2px_8px_rgba(0,0,0,0.03)] transition-transform duration-500 group-hover:scale-105">
+              <Image 
+                src="/logo.png" 
+                alt="Doha Serhan Logo" 
+                fill 
+                className="object-contain p-0.5" 
+              />
+            </div>
 
-            <span className="mt-0.5 text-[10px] uppercase tracking-[0.25em] text-text-muted sm:mt-1 sm:text-xs sm:tracking-[0.4em]">
-              {profile.title.toUpperCase()}
-            </span>
+            <div className="flex flex-col">
+              <span className="text-lg font-bold tracking-[0.25em] text-text-primary sm:text-2xl sm:tracking-[0.35em] transition-colors duration-300 group-hover:text-accent-purple">
+                {profile.name.toUpperCase()}
+              </span>
+
+              <span className="mt-0.5 text-[10px] uppercase tracking-[0.25em] text-text-muted sm:mt-1 sm:text-xs sm:tracking-[0.4em]">
+                {profile.title.toUpperCase()}
+              </span>
+            </div>
           </Link>
 
           <nav
             aria-label="Main navigation"
             onMouseLeave={() => setHoveredHref(null)}
-            className="hidden items-center rounded-full border border-white/5 bg-bg-card/90 p-2 backdrop-blur-xl md:flex"
+            className="hidden items-center rounded-full border border-border-color/80 bg-white/70 p-1.5 backdrop-blur-xl shadow-[0_2px_10px_rgba(0,0,0,0.01)] md:flex"
           >
             {navigationLinks.map((link) => {
               const isActive = activeSection === link.href;
@@ -91,12 +104,14 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => handleLinkClick(link.href)}
                   onMouseEnter={() => setHoveredHref(link.href)}
-                  className="relative rounded-full px-7 py-3 text-sm font-medium text-white/75 transition-colors duration-200 hover:text-white"
+                  className={`relative rounded-full px-7 py-3 text-sm font-medium transition-colors duration-200 ${
+                    isActive ? "text-text-primary" : "text-text-secondary hover:text-text-primary"
+                  }`}
                 >
                   {shouldShowPill && (
                     <motion.span
                       layoutId="navbar-pill"
-                      className="absolute inset-0 rounded-full border border-white/15 bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                      className="absolute inset-0 rounded-full border border-border-color bg-white shadow-[0_3px_10px_rgba(92,85,87,0.06),0_1px_3px_rgba(92,85,87,0.02),inset_0_1px_0_rgba(255,255,255,0.7)]"
                       transition={{
                         type: "spring",
                         stiffness: 450,
@@ -112,7 +127,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:block">
-            <CTAButton href="#contact">GET IN TOUCH</CTAButton>
+            <CTAButton href="#contact" variant="nav">GET IN TOUCH</CTAButton>
           </div>
 
           <button
@@ -121,7 +136,7 @@ export default function Navbar() {
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setIsMenuOpen((current) => !current)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-bg-card text-white md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-border-color bg-white text-text-primary shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:bg-[#fafafa] transition-colors md:hidden"
           >
             {isMenuOpen ? "✕" : "☰"}
           </button>
@@ -131,7 +146,7 @@ export default function Navbar() {
           <nav
             id="mobile-navigation"
             aria-label="Mobile navigation"
-            className="mt-4 rounded-3xl border border-white/10 bg-bg-card/95 p-4 md:hidden"
+            className="mt-4 rounded-3xl border border-border-color bg-white/95 p-4 shadow-xl md:hidden"
           >
             <div className="flex flex-col">
               {navigationLinks.map((link) => {
@@ -144,8 +159,8 @@ export default function Navbar() {
                     onClick={() => handleLinkClick(link.href)}
                     className={`rounded-2xl px-5 py-4 text-base font-medium transition-colors ${
                       isActive
-                        ? "bg-white/10 text-white"
-                        : "text-white/70 hover:bg-white/5 hover:text-white"
+                        ? "bg-gold-accent/10 border border-gold-accent/20 text-text-primary"
+                        : "text-text-secondary hover:bg-black/5 hover:text-text-primary"
                     }`}
                   >
                     {link.label}
@@ -154,7 +169,7 @@ export default function Navbar() {
               })}
             </div>
 
-            <div className="mt-3 border-t border-white/10 pt-4">
+            <div className="mt-3 border-t border-border-color pt-4">
               <CTAButton href="#contact">GET IN TOUCH</CTAButton>
             </div>
           </nav>
