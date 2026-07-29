@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, FileText, Copy, Check, ExternalLink } from "lucide-react";
+import { Mail, FileText, Copy, Check } from "lucide-react";
 import { profile } from "@/data/profile";
 import { contactData } from "@/data/contact";
 import CTAButton from "./CTAButton";
@@ -59,7 +59,7 @@ export default function Contact() {
                 </span>
 
                 <h2 className="mt-6 text-3xl font-normal leading-[1.15] tracking-tight sm:text-4xl lg:text-5xl text-[#211e24]">
-                  Let's Build Something Great <span className="text-accent-purple font-semibold">Together.</span>
+                  Let&apos;s Build Something Great <span className="text-accent-purple font-semibold">Together.</span>
                 </h2>
 
                 <p className="mt-5 text-sm sm:text-base leading-relaxed text-text-secondary/90">

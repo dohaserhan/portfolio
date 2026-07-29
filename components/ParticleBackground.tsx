@@ -13,18 +13,25 @@ type Particle = {
 
 export default function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const section = sectionRef.current;
 
-    if (!canvas) return;
+    if (!canvas || !section) return;
 
     const context = canvas.getContext("2d");
 
     if (!context) return;
 
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrameId: number;
     let particles: Particle[] = [];
+    let isInView = true;
+    let isPageVisible = document.visibilityState === "visible";
+    let lastFrameTime = 0;
+    const targetFrameDuration = 1000 / 24;
 
     const resizeCanvas = () => {
       const pixelRatio = Math.min(window.devicePixelRatio, 2);
@@ -37,8 +44,8 @@ export default function ParticleBackground() {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       const particleCount = Math.max(
-        35,
-        Math.floor((width * height) / 22000),
+        18,
+        Math.floor((width * height) / 32000),
       );
 
       particles = Array.from({ length: particleCount }, () => ({
@@ -51,7 +58,7 @@ export default function ParticleBackground() {
       }));
     };
 
-    const animate = () => {
+    const drawFrame = () => {
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
 
@@ -78,26 +85,95 @@ export default function ParticleBackground() {
         context.fillStyle = `rgba(30, 27, 24, ${particle.opacity})`;
         context.fill();
       });
+    };
+
+    const animate = (timestamp: number) => {
+      if (reducedMotionQuery.matches || !isInView || !isPageVisible) {
+        animationFrameId = 0;
+        return;
+      }
+
+      if (timestamp - lastFrameTime >= targetFrameDuration) {
+        lastFrameTime = timestamp;
+        drawFrame();
+      }
 
       animationFrameId = window.requestAnimationFrame(animate);
     };
 
+    const startAnimation = () => {
+      if (animationFrameId || reducedMotionQuery.matches || !isInView || !isPageVisible) {
+        return;
+      }
+
+      lastFrameTime = 0;
+      animationFrameId = window.requestAnimationFrame(animate);
+    };
+
+    const stopAnimation = () => {
+      if (!animationFrameId) return;
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = 0;
+    };
+
+    const handleVisibilityChange = () => {
+      isPageVisible = document.visibilityState === "visible";
+
+      if (isPageVisible) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
+    };
+
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry?.isIntersecting ?? false;
+
+        if (isInView) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0.05 },
+    );
+
+    const handleReducedMotionChange = () => {
+      if (reducedMotionQuery.matches) {
+        stopAnimation();
+        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+        return;
+      }
+
+      drawFrame();
+      startAnimation();
+    };
+
     resizeCanvas();
-    animate();
+    drawFrame();
+    intersectionObserver.observe(section);
+    startAnimation();
 
     window.addEventListener("resize", resizeCanvas);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
 
     return () => {
+      intersectionObserver.disconnect();
       window.removeEventListener("resize", resizeCanvas);
-      window.cancelAnimationFrame(animationFrameId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+      stopAnimation();
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 h-full w-full"
-    />
+    <section ref={sectionRef} aria-hidden="true" className="pointer-events-none absolute inset-0">
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 h-full w-full"
+      />
+    </section>
   );
 }
