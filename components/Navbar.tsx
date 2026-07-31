@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "motion/react";
 import CTAButton from "./CTAButton";
 import { navigationLinks } from "@/data/navigation";
@@ -66,16 +65,6 @@ export default function Navbar() {
             onClick={() => handleLinkClick("#hero")}
             className="flex items-center gap-3.5 lg:ml-8 group"
           >
-            {/* Logo container */}
-            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-border-color bg-white/90 p-1 shadow-[0_2px_8px_rgba(0,0,0,0.03)] transition-transform duration-500 group-hover:scale-105">
-              <Image 
-                src="/logo.png" 
-                alt="Doha Serhan Logo" 
-                fill 
-                className="object-contain p-0.5" 
-              />
-            </div>
-
             <div className="flex flex-col">
               <span className="text-lg font-bold tracking-[0.25em] text-text-primary sm:text-2xl sm:tracking-[0.35em] transition-colors duration-300 group-hover:text-accent-purple">
                 {profile.name.toUpperCase()}
