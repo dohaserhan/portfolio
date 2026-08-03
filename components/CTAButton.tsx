@@ -6,6 +6,7 @@ type CTAButtonProps = {
   children: ReactNode;
   className?: string;
   variant?: "primary" | "nav";
+  onClick?: () => void;
 };
 
 export default function CTAButton({
@@ -13,12 +14,14 @@ export default function CTAButton({
   children,
   className = "",
   variant = "primary",
+  onClick,
 }: CTAButtonProps) {
   const isNav = variant === "nav";
   
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={`
         group
         relative

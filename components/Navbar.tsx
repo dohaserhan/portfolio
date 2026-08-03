@@ -138,8 +138,10 @@ export default function Navbar() {
             className="mt-4 rounded-3xl border border-border-color bg-white/95 p-4 shadow-xl md:hidden"
           >
             <div className="flex flex-col">
-              {navigationLinks.map((link) => {
-                const isActive = activeSection === link.href;
+              {navigationLinks
+                .filter((link) => link.href !== "#contact")
+                .map((link) => {
+                  const isActive = activeSection === link.href;
 
                 return (
                   <Link
@@ -159,7 +161,7 @@ export default function Navbar() {
             </div>
 
             <div className="mt-3 border-t border-border-color pt-4">
-              <CTAButton href="#contact">GET IN TOUCH</CTAButton>
+              <CTAButton href="#contact" onClick={() => handleLinkClick("#contact")}>GET IN TOUCH</CTAButton>
             </div>
           </nav>
         )}
